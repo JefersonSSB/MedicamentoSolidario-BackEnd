@@ -27,7 +27,7 @@ public class UsuarioControle {
 		return (Iterable<Usuario>) usuarioRepository.findAll();
 	}
 	public Optional<Usuario> listar(long id) {
-		//verifyIfObjectExists(id);
+		verifyIfObjectExists(id);
 		Optional<Usuario> findById = usuarioRepository.findById(id);
 		return findById;
 	}
@@ -36,7 +36,7 @@ public class UsuarioControle {
 		usuarioRepository.deleteById(id);
 	}
 	public void deletar(Usuario usuario) {
-		// verifyIfObjectExists(modelo.getId());
+		 verifyIfObjectExists(usuario.getId());
 		usuarioRepository.delete(usuario);
 	}
 
