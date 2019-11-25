@@ -12,9 +12,8 @@ public class MedicamentoSolidarioApplication extends SpringBootServletInitialize
 		SpringApplication.run(MedicamentoSolidarioApplication.class, args);
 	}
 	
-	/*
-	 * @Override protected SpringApplicationBuilder
-	 * configure(SpringApplicationBuilder application) { return
-	 * application.sources(MedicamentoSolidarioApplication.class); }
-	 */
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(MedicamentoSolidarioApplication.class);
+	}
 }
