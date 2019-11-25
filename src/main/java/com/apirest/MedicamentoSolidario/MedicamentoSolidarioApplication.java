@@ -6,14 +6,16 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class MedicamentoSolidarioApplication extends SpringBootServletInitializer {
+public class MedicamentoSolidarioApplication //extends SpringBootServletInitializer 
+{
 
 	public static void main(String[] args) {
 		SpringApplication.run(MedicamentoSolidarioApplication.class, args);
 	}
 	
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(MedicamentoSolidarioApplication.class);
-	}
+	/*
+	 * @Override protected SpringApplicationBuilder
+	 * configure(SpringApplicationBuilder application) { return
+	 * application.sources(MedicamentoSolidarioApplication.class); }
+	 */
 }
