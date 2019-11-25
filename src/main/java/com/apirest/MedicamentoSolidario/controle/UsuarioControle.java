@@ -1,11 +1,14 @@
 package com.apirest.MedicamentoSolidario.controle;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.apirest.MedicamentoSolidario.Models.Usuario;
+import com.apirest.MedicamentoSolidario.dto.UsuarioRespostaDTO;
 import com.apirest.MedicamentoSolidario.errors.ResourceNotFoundException;
 import com.apirest.MedicamentoSolidario.repository.UsuarioRepository;
 
@@ -23,14 +26,35 @@ public class UsuarioControle {
 		} else
 			return (Usuario) usuarioRepository.save(usuario);
 	}
-	public Iterable<Usuario> listarTodosNormal() {
-		return (Iterable<Usuario>) usuarioRepository.findAll();
+	
+	/*
+	 * public Iterable<Usuario> listarTodosNormal() { return (Iterable<Usuario>)
+	 * usuarioRepository.findAll(); }
+	 */
+	public Iterable<UsuarioRespostaDTO> listarTodosNormal() {
+		Iterable<Usuario> listar = usuarioRepository.findAll();
+		List<UsuarioRespostaDTO> result = new ArrayList<UsuarioRespostaDTO>();
+		for (Usuario str : listar) {
+	        result.add(UsuarioRespostaDTO.transformaEmDTO(str));
+	    }		
+		//UsuarioRespostaDTO transformaEmDTO =  UsuarioRespostaDTO.transformaEmDTO((Usuario) listar);
+		//Iterable<UsuarioRespostaDTO> resposta = (Iterable<UsuarioRespostaDTO>) transformaEmDTO;
+		return result;
 	}
+		
 	public Optional<Usuario> listar(long id) {
 		verifyIfObjectExists(id);
 		Optional<Usuario> findById = usuarioRepository.findById(id);
 		return findById;
 	}
+	
+	public UsuarioRespostaDTO listarDTO(long id) {
+		verifyIfObjectExists(id);
+		Optional<Usuario> findById = usuarioRepository.findById(id);
+		UsuarioRespostaDTO resposta = UsuarioRespostaDTO.transformaEmDTO(findById.get());
+		return resposta;
+	}
+	
 	public void deletarById(long id) {
 		verifyIfObjectExists(id);
 		usuarioRepository.deleteById(id);
@@ -42,9 +66,10 @@ public class UsuarioControle {
 
 	public Usuario atualizar(Usuario usuario) {
 		verifyIfObjectExists(usuario.getId());
-		return (Usuario) usuarioRepository.save(usuario);
+		return usuarioRepository.save(usuario);
 	}
 
+	//---------------------------------------------------------------//
 	private void verifyIfObjectExists(long id) {
 		String msg = MenssagemErro();
 		Optional<Usuario> retorno = usuarioRepository.findById(id);

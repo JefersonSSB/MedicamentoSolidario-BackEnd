@@ -1,13 +1,10 @@
 package com.apirest.MedicamentoSolidario.resources;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.apirest.MedicamentoSolidario.Models.Usuario;
 import com.apirest.MedicamentoSolidario.controle.UsuarioControle;
-import com.apirest.MedicamentoSolidario.repository.UsuarioRepository;
+import com.apirest.MedicamentoSolidario.dto.UsuarioDTO;
+import com.apirest.MedicamentoSolidario.dto.UsuarioRespostaDTO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,32 +34,48 @@ public class UsuarioResources {
 	
 	@ApiOperation(value="Retorna uma lista de Usuarios")
 	@GetMapping("")
-	public Iterable<Usuario> listarTodos() {
+	public Iterable<UsuarioRespostaDTO> listarTodos() {
 		return usuarioControle.listarTodosNormal();
 	}
-	// @ApiOperation(value="Retorna um Usuario")
+	
 	@ApiOperation(value = "Retorna um Usuario unico")
 	@GetMapping("/{id}")
-	public Optional<Usuario> listar(@PathVariable(value="id")long id) {		
-		return usuarioControle.listar(id);
+	public UsuarioRespostaDTO listar(@PathVariable(value="id")long id) {	
+		Optional<Usuario> user = usuarioControle.listar(id);
+		return UsuarioRespostaDTO.transformaEmDTO(user.get());
 	}
+	
+	/*
+	 * @ApiOperation(value = "Retorna um Usuario unico(TESTE)")
+	 * 
+	 * @GetMapping("/a{id}") public Optional<Usuario>
+	 * listarTeste(@PathVariable(value="id")long id) { //Optional<Usuario> user =
+	 * usuarioControle.listar(id); //return
+	 * UsuarioRespostaDTO.transformaEmDTO(user.get()); return
+	 * usuarioControle.listar(id); }
+	 */
+	
+	
 	@ApiOperation(value = "Salva um Usuario")
 	@PostMapping("")
-	public Usuario salvar(@RequestBody @Valid Usuario usuario) {
-		return usuarioControle.salvar(usuario);
+	public UsuarioRespostaDTO salvar(@RequestBody @Valid UsuarioDTO usuarioDTO) {
+		Usuario user = usuarioControle.salvar(usuarioDTO.trsnformaParaObjSalvar());
+		return UsuarioRespostaDTO.transformaEmDTO(user);
 	}
 	
 	@ApiOperation(value = "Atualiza um Usuario")
 	@PutMapping("")
-	public Usuario atualizar(@RequestBody @Valid Usuario usuario) {
-		return usuarioControle.atualizar(usuario);
+	public UsuarioRespostaDTO atualizar(@RequestBody @Valid UsuarioDTO dto) {
+		Usuario user = usuarioControle.atualizar(dto.trsnformaParaObjEditar());
+		return UsuarioRespostaDTO.transformaEmDTO(user);
 	}
 
-	@ApiOperation(value = "Deleta um Usuario (objeto)")
-	@DeleteMapping("")
-	public void deletar(@RequestBody @Valid Usuario categoria) {
-		usuarioControle.deletar(categoria);
-	}
+	/*
+	 * @ApiOperation(value = "Deleta um Usuario (objeto)")
+	 * 
+	 * @DeleteMapping("") public void deletar(@RequestBody @Valid Usuario categoria)
+	 * { usuarioControle.deletar(categoria); }
+	 */
 
 	@ApiOperation(value = "Deleta um Usuario por Id")
 	@DeleteMapping("/{id}")
