@@ -24,6 +24,7 @@ public class Usuario {
 	private Date nascimento;
 	private String senha;
 	private String sexo;
+	private String tipo;
 	
 	//@JsonIdentityReference(alwaysAsId = true)
 	@OneToMany(mappedBy = "doador")
@@ -44,7 +45,7 @@ public class Usuario {
 		super();
 	}
 
-	public Usuario(String nome, String cpf, String email, String telefone, Date nascimento,String senha, String sexo) {
+	public Usuario(String nome, String cpf, String email, String telefone, Date nascimento,String senha, String sexo, String tipo) {
 		this.nome=nome;
 		this.cpf=cpf;
 		this.email=email;
@@ -52,12 +53,13 @@ public class Usuario {
 		this.nascimento=nascimento;		
 		this.senha=senha;
 		this.sexo=sexo;
+		this.tipo=tipo;
 	}
 	
 
 
 	public Usuario(long id, String nome, String cpf, String email, String telefone, Date nascimento,
-			String senha, String sexo) {
+			String senha, String sexo, String tipo) {
 		this.id=id;
 		this.nome=nome;
 		this.cpf=cpf;
@@ -66,6 +68,7 @@ public class Usuario {
 		this.nascimento=nascimento;		
 		this.senha=senha;
 		this.sexo= sexo;
+		this.tipo=tipo;
 	}
 
 	public List<Doacao> getMedicamentoDoado() {
@@ -136,6 +139,14 @@ public class Usuario {
 
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 	
 	

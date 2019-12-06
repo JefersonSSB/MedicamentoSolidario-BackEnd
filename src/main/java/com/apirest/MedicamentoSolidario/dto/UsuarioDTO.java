@@ -14,13 +14,14 @@ public class UsuarioDTO {
 	private Date nascimento;
 	private String senha;
 	private String sexo;
+	private String tipo;
 	
 	public Usuario trsnformaParaObjSalvar() {
-		return new Usuario(nome, cpf, email, telefone, nascimento, senha, sexo);
+		return new Usuario(nome, cpf, email, telefone, nascimento, senha, sexo, tipo);
 	}
 	
 	public Usuario trsnformaParaObjEditar() {
-		return new Usuario(id,nome, cpf, email, telefone, nascimento, senha, sexo);
+		return new Usuario(id,nome, cpf, email, telefone, nascimento, senha, sexo,tipo);
 	}
 	
 
@@ -88,5 +89,13 @@ public class UsuarioDTO {
 
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 }
