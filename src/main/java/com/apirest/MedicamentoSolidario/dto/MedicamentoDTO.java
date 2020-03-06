@@ -2,7 +2,10 @@ package com.apirest.MedicamentoSolidario.dto;
 
 import java.sql.Date;
 
+import com.apirest.MedicamentoSolidario.Models.Doacao;
 import com.apirest.MedicamentoSolidario.Models.Medicamento;
+import com.apirest.MedicamentoSolidario.Models.Recebimento;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class MedicamentoDTO {
 	
@@ -15,11 +18,18 @@ public class MedicamentoDTO {
 	private String tarja;
 	private String tipoArmazenamento;
 	private int quantidade;
+	@JsonIgnore
+	private Doacao fullDoacaoIn;
+	private int idDoacaoIn;
+	@JsonIgnore
+	private Recebimento fullDoacaoOut;
+	private int idDoacaoOut;
 	
+	//salvar medicamento sem interagir com as doaçoes
 	public Medicamento transformarParaObjSalvar() {
-		return new Medicamento(id, nome, principio, tipoReceita, data, dataVencimento, tarja, tipoArmazenamento, quantidade);
+		return new Medicamento(id, nome, principio, tipoReceita, data, dataVencimento, tarja, tipoArmazenamento, quantidade,idDoacaoIn);
 	}
-	
+	//edita sem interagir com as doaçoes
 	public Medicamento TransformarParaObjEditar() {
 		return new Medicamento(nome, principio, tipoReceita, data, dataVencimento, tarja, tipoArmazenamento, quantidade);
 	}
@@ -95,7 +105,37 @@ public class MedicamentoDTO {
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
-	
-	
 
+	public Doacao getFullDoacaoIn() {
+		return fullDoacaoIn;
+	}
+
+	public void setFullDoacaoIn(Doacao fullDoacaoIn) {
+		this.fullDoacaoIn = fullDoacaoIn;
+	}
+
+	public Recebimento getFullDoacaoOut() {
+		return fullDoacaoOut;
+	}
+
+	public void setFullDoacaoOut(Recebimento fullDoacaoOut) {
+		this.fullDoacaoOut = fullDoacaoOut;
+	}
+
+	public int getIdDoacaoIn() {
+		return idDoacaoIn;
+	}
+
+	public void setIdDoacaoIn(int idDoacaoIn) {
+		this.idDoacaoIn = idDoacaoIn;
+	}
+
+	public int getIdDoacaoOut() {
+		return idDoacaoOut;
+	}
+
+	public void setIdDoacaoOut(int idDoacaoOut) {
+		this.idDoacaoOut = idDoacaoOut;
+	}
+	
 }

@@ -2,8 +2,9 @@ package com.apirest.MedicamentoSolidario.dto;
 
 import java.sql.Date;
 
+import com.apirest.MedicamentoSolidario.Models.Role;
 import com.apirest.MedicamentoSolidario.Models.Usuario;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class UsuarioDTO {
 	private long id;
@@ -14,16 +15,18 @@ public class UsuarioDTO {
 	private Date nascimento;
 	private String senha;
 	private String sexo;
-	private String tipo;
+	private String role;
+	@JsonIgnore
+	private Role fullRole;
 	
+
 	public Usuario trsnformaParaObjSalvar() {
-		return new Usuario(nome, cpf, email, telefone, nascimento, senha, sexo, tipo);
+		return new Usuario(nome, cpf, email, telefone, nascimento, senha, sexo, fullRole);
 	}
-	
+
 	public Usuario trsnformaParaObjEditar() {
-		return new Usuario(id,nome, cpf, email, telefone, nascimento, senha, sexo,tipo);
+		return new Usuario(id, nome, cpf, email, telefone, nascimento, senha, sexo, fullRole);
 	}
-	
 
 	public String getNome() {
 		return nome;
@@ -73,11 +76,9 @@ public class UsuarioDTO {
 		this.senha = senha;
 	}
 
-
 	public long getId() {
 		return id;
 	}
-
 
 	public void setId(long id) {
 		this.id = id;
@@ -91,11 +92,21 @@ public class UsuarioDTO {
 		this.sexo = sexo;
 	}
 
-	public String getTipo() {
-		return tipo;
+	public String getRole() {
+		return role;
 	}
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setRole(String role) {
+		this.role = role;
 	}
+
+	public Role getFullRole() {
+		return fullRole;
+	}
+
+	public void setFullRole(Role fullRole) {
+		this.fullRole = fullRole;
+	}
+	
+
 }

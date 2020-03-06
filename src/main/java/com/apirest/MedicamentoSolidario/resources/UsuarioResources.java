@@ -43,23 +43,13 @@ public class UsuarioResources {
 	public UsuarioRespostaDTO listar(@PathVariable(value="id")long id) {	
 		Optional<Usuario> user = usuarioControle.listar(id);
 		return UsuarioRespostaDTO.transformaEmDTO(user.get());
-	}
-	
-	/*
-	 * @ApiOperation(value = "Retorna um Usuario unico(TESTE)")
-	 * 
-	 * @GetMapping("/a{id}") public Optional<Usuario>
-	 * listarTeste(@PathVariable(value="id")long id) { //Optional<Usuario> user =
-	 * usuarioControle.listar(id); //return
-	 * UsuarioRespostaDTO.transformaEmDTO(user.get()); return
-	 * usuarioControle.listar(id); }
-	 */
-	
+	}	
 	
 	@ApiOperation(value = "Salva um Usuario")
 	@PostMapping("")
 	public UsuarioRespostaDTO salvar(@RequestBody @Valid UsuarioDTO usuarioDTO) {
-		Usuario user = usuarioControle.salvar(usuarioDTO.trsnformaParaObjSalvar());
+		//Usuario user = usuarioControle.salvar(usuarioDTO.trsnformaParaObjSalvar());
+		Usuario user = usuarioControle.salvar2(usuarioDTO);
 		return UsuarioRespostaDTO.transformaEmDTO(user);
 	}
 	
@@ -70,12 +60,6 @@ public class UsuarioResources {
 		return UsuarioRespostaDTO.transformaEmDTO(user);
 	}
 
-	/*
-	 * @ApiOperation(value = "Deleta um Usuario (objeto)")
-	 * 
-	 * @DeleteMapping("") public void deletar(@RequestBody @Valid Usuario categoria)
-	 * { usuarioControle.deletar(categoria); }
-	 */
 
 	@ApiOperation(value = "Deleta um Usuario por Id")
 	@DeleteMapping("/{id}")

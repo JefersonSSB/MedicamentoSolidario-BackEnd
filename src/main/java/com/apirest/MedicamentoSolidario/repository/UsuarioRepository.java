@@ -8,4 +8,5 @@ import com.apirest.MedicamentoSolidario.Models.Usuario;
 
 public interface UsuarioRepository extends PagingAndSortingRepository<Usuario, Long>{
 	Optional<Usuario> findById(long id);
+	Usuario findByCpf(String cpf);
 }

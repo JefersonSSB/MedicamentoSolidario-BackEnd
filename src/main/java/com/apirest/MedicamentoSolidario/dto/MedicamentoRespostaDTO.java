@@ -15,7 +15,8 @@ public class MedicamentoRespostaDTO {
 	private String tarja;
 	private String tipoArmazenamento;
 	private int quantidade;
-	
+	private long idDoacaoOut;
+	private long idDoacaoIn;	
 	
 	private MedicamentoRespostaDTO(long id, String nome, String principio, String tipoReceita, Date data,
 			Date dataVencimento, String tarja, String tipoArmazenamento, int quantidade) {
@@ -31,6 +32,22 @@ public class MedicamentoRespostaDTO {
 		this.quantidade = quantidade;
 	}
 	
+	public MedicamentoRespostaDTO(long id, String nome, String principio, String tipoReceita, Date data,
+			Date dataVencimento, String tarja, String tipoArmazenamento, long idIn, long idOut, int quantidade) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.principio = principio;
+		this.tipoReceita = tipoReceita;
+		this.data = data;
+		this.dataVencimento = dataVencimento;
+		this.tarja = tarja;
+		this.tipoArmazenamento = tipoArmazenamento;
+		this.setIdDoacaoIn(idIn);
+		this.setIdDoacaoIn(idOut);
+		this.quantidade = quantidade;
+	}
+
 	public static MedicamentoRespostaDTO transformaEmDTO(Medicamento medicamento) {
 		return new MedicamentoRespostaDTO(medicamento.getId(), 
 				medicamento.getNome(),
@@ -41,6 +58,19 @@ public class MedicamentoRespostaDTO {
 				medicamento.getTarja(),
 				medicamento.getTipoArmazenamento(), 
 				medicamento.getQuantidade());
+	}
+	public static MedicamentoRespostaDTO transformaEmDTOList(Medicamento medicamento) {
+		return new MedicamentoRespostaDTO(medicamento.getId(), 
+				medicamento.getNome(),
+				medicamento.getPrincipio(),
+				medicamento.getTipoReceita(), 
+				medicamento.getData(), 
+				medicamento.getDataVencimento(), 
+				medicamento.getTarja(),
+				medicamento.getTipoArmazenamento(),
+				medicamento.getDoacao_in().getId(),
+				medicamento.getDoacao_out().getId(),
+				medicamento.getQuantidade());				
 	}
 
 	public long getId() {
@@ -113,6 +143,22 @@ public class MedicamentoRespostaDTO {
 
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
+	}
+
+	public long getIdDoacaoOut() {
+		return idDoacaoOut;
+	}
+
+	public void setIdDoacaoOut(long idDoacaoOut) {
+		this.idDoacaoOut = idDoacaoOut;
+	}
+
+	public long getIdDoacaoIn() {
+		return idDoacaoIn;
+	}
+
+	public void setIdDoacaoIn(long idDoacaoIn) {
+		this.idDoacaoIn = idDoacaoIn;
 	}
 	
 }

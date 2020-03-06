@@ -12,9 +12,9 @@ public class UsuarioRespostaDTO {
 	private String telefone;
 	private Date nascimento;
 	private String sexo;	
-	private String tipo;
+	private String role;
 
-	 private UsuarioRespostaDTO(long id, String nome, String cpf, String email, String telefone, Date nascimento, String sexo,String tipo) {
+	 private UsuarioRespostaDTO(long id, String nome, String cpf, String email, String telefone, Date nascimento, String sexo, String role) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -23,12 +23,11 @@ public class UsuarioRespostaDTO {
 		this.telefone = telefone;
 		this.nascimento = nascimento;
 		this.sexo = sexo;
-		this.setTipo(tipo);
+		this.role = role;
 	}
-	
-
+	 
 	public static UsuarioRespostaDTO transformaEmDTO(Usuario usuario) {
-		return new UsuarioRespostaDTO(usuario.getId(),usuario.getNome(),usuario.getCpf(),usuario.getEmail(),usuario.getTelefone(),usuario.getNascimento(),usuario.getSexo(),usuario.getTipo());
+		return new UsuarioRespostaDTO(usuario.getId(),usuario.getNome(),usuario.getCpf(),usuario.getEmail(),usuario.getTelefone(),usuario.getNascimento(),usuario.getSexo(), usuario.getRole().getNameRole());
 	}
 
 	public long getId() {
@@ -101,12 +100,12 @@ public class UsuarioRespostaDTO {
 	}
 
 
-	public String getTipo() {
-		return tipo;
+	public String getRole() {
+		return role;
 	}
 
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setRole(String role) {
+		this.role = role;
 	}	
 }

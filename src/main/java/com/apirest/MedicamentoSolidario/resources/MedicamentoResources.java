@@ -34,7 +34,7 @@ public class MedicamentoResources {
 	
 	@ApiOperation(value="Retorna uma lista de Medicamentos")
 	@GetMapping("")
-	public Iterable<Medicamento> listarTodos() {
+	public Iterable<MedicamentoRespostaDTO> listarTodos() {
 		return controle.listarTodosNormal();
 	}
 	
@@ -42,12 +42,8 @@ public class MedicamentoResources {
 	@GetMapping("/{id}")
 	public MedicamentoRespostaDTO listar(@PathVariable(value="id")long id) {
 		Optional<Medicamento> med = controle.listar(id);
-		return MedicamentoRespostaDTO.transformaEmDTO(med.get());
+		return MedicamentoRespostaDTO.transformaEmDTOList(med.get());
 	}
-	//public Optional<Medicamento> listar(@PathVariable(value="id")long id) {	
-	//	Optional<Medicamento> user = controle.listar(id);
-	//	return user;
-//	}
 	
 	@ApiOperation(value = "Salva um Medicamento")
 	@PostMapping("")
@@ -56,16 +52,12 @@ public class MedicamentoResources {
 		return MedicamentoRespostaDTO.transformaEmDTO(med);
 		
 	}
-	//public Medicamento salvar(@RequestBody @Valid Medicamento medicamento) {
-	//	Medicamento resposta = controle.salvar(medicamento);
-	//	return resposta;
-	//}
 	
 	@ApiOperation(value = "Atualiza um Medicamento")
 	@PutMapping("")
-	public Medicamento atualizar(@RequestBody @Valid Medicamento dto) {
-		Medicamento resposta = controle.atualizar(dto);
-		return resposta;
+	public MedicamentoRespostaDTO atualizar(@RequestBody @Valid MedicamentoDTO dto) {
+		Medicamento resposta = controle.atualizar(dto.TransformarParaObjEditar());
+		return MedicamentoRespostaDTO.transformaEmDTO(resposta);
 	}
 	
 	@ApiOperation(value = "Deleta um Medicamento por Id")

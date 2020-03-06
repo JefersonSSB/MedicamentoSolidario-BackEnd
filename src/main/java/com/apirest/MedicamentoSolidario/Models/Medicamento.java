@@ -7,13 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name="TB_MEDICAMENTO")
@@ -30,26 +26,23 @@ public class Medicamento {
 	private String tarja;
 	private String tipoArmazenamento;
 	private int quantidade;
+	private boolean status;
 	
 	@ManyToOne
-	@JsonIdentityReference(alwaysAsId = true)
 	private Doacao doacao_in;
 	
 	@ManyToOne
-	@JsonIdentityReference(alwaysAsId = true)
 	private Recebimento doacao_out;	
 	
-	@OneToMany(mappedBy = "medicamento")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
-	@JsonIdentityReference(alwaysAsId = true)
+	@ManyToMany(mappedBy = "medicamentos")
 	private List<Pedido> pedidos;	
-	
+
 	public Medicamento() {
 		super();
 	}
 	
 	public Medicamento(long id, String nome, String principio, String tipoReceita, Date data, Date dataVencimento,
-			String tarja, String tipoArmazenamento, int quantidade) {
+			String tarja, String tipoArmazenamento, int quantidade,int idDoacaoin) {
 		this.id = id;
 		this.nome = nome;
 		this.principio = principio;
@@ -73,7 +66,14 @@ public class Medicamento {
 		this.quantidade = quantidade;
 	}
 	
-	
+	public List<?> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -139,6 +139,14 @@ public class Medicamento {
 	}
 	public void setDoacao_out(Recebimento doacao_out) {
 		this.doacao_out = doacao_out;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 	
 }

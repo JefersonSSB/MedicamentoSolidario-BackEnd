@@ -33,7 +33,7 @@ public class PontoColetaResources {
 	
 	@ApiOperation(value="Retorna uma lista de Pontos de Coleta")
 	@GetMapping("")
-	public Iterable<PontoColeta> listarTodos() {
+	public Iterable<PontoColetaRespostaDTO> listarTodos() {
 		return controle.listarTodosNormal();
 	}
 	
@@ -43,10 +43,6 @@ public class PontoColetaResources {
 		Optional<PontoColeta> med = controle.listar(id);
 		return PontoColetaRespostaDTO.transformaEmDTO(med.get());
 	}
-	//public Optional<Medicamento> listar(@PathVariable(value="id")long id) {	
-	//	Optional<Medicamento> user = controle.listar(id);
-	//	return user;
-//	}
 	
 	@ApiOperation(value = "Salva um Ponto de Coleta")
 	@PostMapping("")
@@ -55,16 +51,12 @@ public class PontoColetaResources {
 		return PontoColetaRespostaDTO.transformaEmDTO(med);
 		
 	}
-	//public Medicamento salvar(@RequestBody @Valid Medicamento medicamento) {
-	//	Medicamento resposta = controle.salvar(medicamento);
-	//	return resposta;
-	//}
 	
 	@ApiOperation(value = "Atualiza um Ponto de Coleta")
 	@PutMapping("")
-	public PontoColeta atualizar(@RequestBody @Valid PontoColeta pontoColetaDTO) {
-		PontoColeta resposta = controle.atualizar(pontoColetaDTO);
-		return resposta;
+	public PontoColetaRespostaDTO atualizar(@RequestBody @Valid PontoColetaDTO pontoColetaDTO) {
+		PontoColeta resposta = controle.atualizar(pontoColetaDTO.transformarParaObjEditar());
+		return PontoColetaRespostaDTO.transformaEmDTO(resposta);
 	}
 	
 	@ApiOperation(value = "Deleta um Ponto de Coleta por Id")

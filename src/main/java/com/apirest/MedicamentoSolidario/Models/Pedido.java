@@ -1,18 +1,18 @@
 package com.apirest.MedicamentoSolidario.Models;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name="TB_PEDIDO")
@@ -24,18 +24,41 @@ public class Pedido {
 	private Date data;
 	
 	@ManyToOne
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
-	@JsonIdentityReference(alwaysAsId = true)
 	private Usuario usuario;
-	
-	@ManyToOne
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
-	@JsonIdentityReference(alwaysAsId = true)
-	private Medicamento medicamento;	
+		
+	@ManyToMany
+	@JoinTable(name = "pedido_medicamento",
+	joinColumns = @JoinColumn(name="pedido_id", referencedColumnName = "id"),
+	inverseJoinColumns = @JoinColumn(name="medicamento_id",referencedColumnName = "id")
+			)
+    private List<Medicamento> medicamentos;
 	
 	@OneToOne(mappedBy = "pedido")
-	@JsonIdentityReference(alwaysAsId = true)
 	private Recebimento recebimento;
+
+	public Pedido(long id2, String justificativa2, Date data2,Usuario usuario,List<Medicamento> medicamentos2) {
+		this.id=id2;
+		this.justificativa=justificativa2;
+		this.data=data2;
+		this.usuario=usuario;
+		this.medicamentos = medicamentos2;
+		
+	}
+
+	public Pedido(String justificativa2, Date data2, Usuario usuario2, List<Medicamento> medicamentos2) {
+		this.justificativa=justificativa2;
+		this.data=data2;
+		this.usuario=usuario2;
+		this.medicamentos = medicamentos2;
+	}
+	
+	public List<Medicamento> getMedicamentos() {
+		return medicamentos;
+	}
+
+	public void setMedicamentos(List<Medicamento> medicamentos) {
+		this.medicamentos = medicamentos;
+	}
 
 	public long getId() {
 		return id;
@@ -67,14 +90,6 @@ public class Pedido {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
-	}
-
-	public Medicamento getMedicamento() {
-		return medicamento;
-	}
-
-	public void setMedicamento(Medicamento medicamento) {
-		this.medicamento = medicamento;
 	}
 
 	public Recebimento getRecebimento() {

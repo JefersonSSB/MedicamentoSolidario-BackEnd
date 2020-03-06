@@ -13,38 +13,50 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-
 @Entity
 @Table(name="TB_RECEBIMENTO")
 public class Recebimento {
+	//MEDICAMENTO_OUT
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private long id;
 	
 	private Date data;
 	private String obs;
 	
-	@JsonIdentityReference(alwaysAsId = true)
 	@OneToMany(mappedBy = "doacao_out")
 	private List<Medicamento> medicamento;
 	@ManyToOne
 	@JoinColumn(name="voluntario_id")
-	@JsonIdentityReference(alwaysAsId = true)
 	private Usuario voluntario;
 	@ManyToOne
 	@JoinColumn(name="ponto_coleta_id")
-	@JsonIdentityReference(alwaysAsId = true)
 	private PontoColeta ponto;	
 	@OneToOne
-	@JsonIdentityReference(alwaysAsId = true)
 	private Pedido pedido;
 	
-	
-	public int getId() {
+	public Recebimento(long id2, Date data2, String obs2, Usuario voluntario2, PontoColeta ponto2, Pedido pedido2) {
+		this.id=id2;
+		this.data=data2;
+		this.obs=obs2;
+		this.voluntario=voluntario2;
+		this.ponto=ponto2;
+		this.pedido=pedido2;		
+	}
+	public Recebimento(Date data2, String obs2, Usuario voluntario2, PontoColeta ponto2, Pedido pedido2) {
+		this.data=data2;
+		this.obs=obs2;
+		this.voluntario=voluntario2;
+		this.ponto=ponto2;
+		this.pedido=pedido2;	
+	}
+	public Recebimento() {
+		// TODO Auto-generated constructor stub
+	}
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public Date getData() {
@@ -76,6 +88,12 @@ public class Recebimento {
 	}
 	public void setPonto(PontoColeta ponto) {
 		this.ponto = ponto;
+	}
+	public Pedido getPedido() {
+		return pedido;
+	}
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
 	}
 
 }

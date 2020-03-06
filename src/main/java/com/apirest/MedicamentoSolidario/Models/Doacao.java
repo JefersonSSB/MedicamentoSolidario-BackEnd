@@ -11,41 +11,52 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-
 @Entity
 @Table(name="TB_DOACAO")
 //quando o medicamento é doado para o posto de coleta
+// MEDICAMENTO_IN
 public class Doacao {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private long id;
 	
 	private Date data;
 	private String obs;
 	
-	
 	@ManyToOne
-	@JsonIdentityReference(alwaysAsId = true)
 	private Usuario doador;
 	
 	@ManyToOne
-	@JsonIdentityReference(alwaysAsId = true)
 	private Usuario voluntario;
 	
 	@ManyToOne
-	@JsonIdentityReference(alwaysAsId = true)
 	private PontoColeta ponto;
 	
 	@OneToMany(mappedBy = "doacao_in")
-	@JsonIdentityReference(alwaysAsId = true)
 	private List<Medicamento> medicamento;
 
-	public int getId() {
+	public Doacao(long id2, Date data2, String obs2, Usuario doador2, Usuario voluntario2, PontoColeta ponto2) {
+		this.id=id2;
+		this.data=data2;
+		this.obs=obs2;
+		this.doador=doador2;
+		this.voluntario=voluntario2;
+		this.ponto=ponto2;
+	}
+
+	public Doacao(Date data2, String obs2, Usuario doador2, Usuario voluntario2, PontoColeta ponto2) {
+		this.data=data2;
+		this.obs=obs2;
+		this.doador=doador2;
+		this.voluntario=voluntario2;
+		this.ponto=ponto2;
+	}
+
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

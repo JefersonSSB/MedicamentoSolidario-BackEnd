@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.apirest.MedicamentoSolidario.Models.Pedido;
 import com.apirest.MedicamentoSolidario.controle.PedidoControle;
+import com.apirest.MedicamentoSolidario.dto.PedidoDTO;
+import com.apirest.MedicamentoSolidario.dto.PedidoRespostaDTO;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -30,38 +33,30 @@ public class PedidoResources {
 	
 	@ApiOperation(value="Retorna uma lista de Pedidos")
 	@GetMapping("")
-	public Iterable<Pedido> listarTodos() {
+	public Iterable<PedidoRespostaDTO> listarTodos() {
 		return controle.listarTodosNormal();
 	}
 	
 	@ApiOperation(value = "Retorna um Pedido unico")
 	@GetMapping("/{id}")
-	public Optional<Pedido> listar(@PathVariable(value="id")long id) {
-		Optional<Pedido> med = controle.listar(id);
-		return med;
+	public PedidoRespostaDTO listar(@PathVariable(value="id")long id) {
+		Optional<Pedido> pedido = controle.listar(id);
+		return PedidoRespostaDTO.transformaEmDTO(pedido.get());
 	}
-	//public Optional<Medicamento> listar(@PathVariable(value="id")long id) {	
-	//	Optional<Medicamento> user = controle.listar(id);
-	//	return user;
-//	}
 	
 	@ApiOperation(value = "Salva um Pedido")
 	@PostMapping("")
-	public Pedido salvar(@RequestBody @Valid Pedido pedido) {
-		Pedido med = controle.salvar(pedido);
-		return med;
+	public PedidoRespostaDTO salvar(@RequestBody @Valid PedidoDTO pedidoDTO) {
+		Pedido pedido = controle.salvar(pedidoDTO.transformarParaObjSalvar());
+		return PedidoRespostaDTO.transformaEmDTO(pedido);
 		
 	}
-	//public Medicamento salvar(@RequestBody @Valid Medicamento medicamento) {
-	//	Medicamento resposta = controle.salvar(medicamento);
-	//	return resposta;
-	//}
 	
 	@ApiOperation(value = "Atualiza um Pedido")
 	@PutMapping("")
-	public Pedido atualizar(@RequestBody @Valid Pedido dto) {
-		Pedido resposta = controle.atualizar(dto);
-		return resposta;
+	public PedidoRespostaDTO atualizar(@RequestBody @Valid PedidoDTO dto) {
+		Pedido resposta = controle.atualizar(dto.transformarParaObjEditar());
+		return PedidoRespostaDTO.transformaEmDTO(resposta);
 	}
 	
 	@ApiOperation(value = "Deleta um Pedido por Id")
